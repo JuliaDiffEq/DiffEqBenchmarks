@@ -1,10 +1,10 @@
 ---
-title: Hénon–Heiles Energy Conservation
+title: Hénon-Heiles Energy Conservation
 author: Sebastian Micluța-Câmpeanu, Chris Rackauckas
 ---
 
 In this notebook we will study the energy conservation properties of several high-order methods
-for the Hénon–Heiles system.
+for the [Hénon-Heiles system](https://en.wikipedia.org/wiki/H%C3%A9non%E2%80%93Heiles_system).
 We will se how the energy error behaves at very thight tolerances and how different techniques,
 such as using symplectic solvers or manifold projections, benchmark against each other.
 The Hamiltonian for this system is given by:
@@ -14,23 +14,23 @@ $$
 
 We will also compare the in place apporach with the out of place approach by using `Array`s
 (for the in place version) and `StaticArrays` (for out of place versions).
-In order to separate these two, we will define the relevant functions and initial conditions
-in the `:inplace` and `OutofPlace` modules. In this way the rest of the code will work for both.
+In order to separate these two, we will use `iip` for the in-place names and `oop` for out of place ones.
 
 ```julia
 using OrdinaryDiffEq, Plots, DiffEqCallbacks
+using SciMLBenchmarks
 using TaylorIntegration, LinearAlgebra, StaticArrays
 
 T(p) = 1//2 * norm(p)^2
 V(q) = 1//2 * (q[1]^2 + q[2]^2 + 2q[1]^2 * q[2]- 2//3 * q[2]^3)
 H(p,q, params) = T(p) + V(q)
 
-function iip_q̇(dq,p,q,params,t)
+function iip_dq(dq,p,q,params,t)
     dq[1] = p[1]
     dq[2] = p[2]
 end
 
-function iip_ṗ(dp,p,q,params,t)
+function iip_dp(dp,p,q,params,t)
     dp[1] = -q[1] * (1 + 2q[2])
     dp[2] = -q[2] - (q[1]^2 - q[2]^2)
 end
@@ -38,11 +38,11 @@ end
 const iip_q0 = [0.1, 0.]
 const iip_p0 = [0., 0.5]
 
-function oop_q̇(p, q, params, t)
+function oop_dq(p, q, params, t)
     p
 end
 
-function oop_ṗ(p, q, params, t)
+function oop_dp(p, q, params, t)
     dp1 = -q[1] * (1 + 2q[2])
     dp2 = -q[2] - (q[1]^2 - q[2]^2)
     @SVector [dp1, dp2]
@@ -80,9 +80,9 @@ abs_energy_err(sol) = [abs.(H([sol[1,j], sol[2,j]], [sol[3,j], sol[4,j]], nothin
 
 function compare(mode=:inplace, all=true, plt=nothing; tmax=1e2)
     if mode == :inplace
-        prob = DynamicalODEProblem(iip_ṗ, iip_q̇, iip_p0, iip_q0, (0., tmax))
+        prob = DynamicalODEProblem(iip_dp, iip_dq, iip_p0, iip_q0, (0., tmax))
     else
-        prob = DynamicalODEProblem(oop_ṗ, oop_q̇, oop_p0, oop_q0, (0., tmax))
+        prob = DynamicalODEProblem(oop_dp, oop_dq, oop_p0, oop_q0, (0., tmax))
     end
     prob_linear = ODEProblem(hamilton, vcat(iip_p0, iip_q0), (0., tmax))
 

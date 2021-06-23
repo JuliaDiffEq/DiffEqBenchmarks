@@ -3,9 +3,6 @@ title: Single Pedulum Comparison
 author: Gen Kuroki (黒木玄), Chris Rackauckas
 ---
 
-# Table of Contents
- <p><div class="lev1 toc-item"><a href="#Solving-single-pendulums-by-DifferentialEquations.jl" data-toc-modified-id="Solving-single-pendulums-by-DifferentialEquations.jl-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Solving single pendulums by DifferentialEquations.jl</a></div><div class="lev2 toc-item"><a href="#Tests" data-toc-modified-id="Tests-11"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Tests</a></div><div class="lev2 toc-item"><a href="#Comparison-of-symplectic-Integrators" data-toc-modified-id="Comparison-of-symplectic-Integrators-12"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>Comparison of symplectic Integrators</a></div>
-
 # Solving single pendulums by DifferentialEquations.jl
 
 In this notebook, we shall solve the single pendulum equation:
