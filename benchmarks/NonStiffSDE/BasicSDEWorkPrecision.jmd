@@ -236,6 +236,7 @@ plot(wp)
 
 The RSwM3 adaptivity algorithm does not appear to have any significant overhead even on problems which do not necessitate adaptive timestepping. The tolerance clearly  In addition, the Rossler methods are shown to be orders of magnitude more efficient and should be used whenever applicable. The Oval2 tests show that these results are only magnified as the problem difficulty increases.
 
+
 ```julia, echo = false
 using SciMLBenchmarks
 SciMLBenchmarks.bench_footer(WEAVE_ARGS[:folder],WEAVE_ARGS[:file])

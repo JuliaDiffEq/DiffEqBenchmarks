@@ -96,6 +96,7 @@ plot!([se[end];se[end]],times,color=:orange,linestyle=:dash,label="Sample Error:
 
 These results show that in both strong and weak error, the high order method is more efficient. The strong and the weak are track each other well for the methods tested on this problem, with the strong error slightly higher than the weak error. To reach the sample error for a 100 trajectories, the higher order method is around 5x faster. To reach the sampling error for 10000 trajectories, the higher order method is nearly 100x faster.
 
+
 ```julia, echo = false
 using SciMLBenchmarks
 SciMLBenchmarks.bench_footer(WEAVE_ARGS[:folder],WEAVE_ARGS[:file])

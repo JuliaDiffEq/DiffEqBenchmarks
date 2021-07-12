@@ -254,6 +254,7 @@ plot!([se[end];se[end]],times,color=:red,linestyle=:dash,label="Sample Error: 10
 
 In the additive noise problem, the `EM` and `RKMil` algorithms are not effective at reaching the sample error. In the other two problems, the `EM` and `RKMil` algorithms are as efficient as the higher order methods at achieving the maximal weak error.
 
+
 ```julia, echo = false
 using SciMLBenchmarks
 SciMLBenchmarks.bench_footer(WEAVE_ARGS[:folder],WEAVE_ARGS[:file])
